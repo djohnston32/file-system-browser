@@ -10,3 +10,11 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+
+  apitest:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: pytest test.py
+    volumes:
+      - .:/app
