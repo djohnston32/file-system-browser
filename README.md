@@ -1,6 +1,7 @@
 # file-system-browser
 ## To Run
 - Clone the repository.
+- Ensure docker is running.
 - In the cloned directory, start the application by running `./run.sh <path/to/root/directory>` (e.g. `./run.sh /Users/dj/notes`). Some paths, like `/`, result in errors that I haven't gotten around to fixing yet. I've had success with everything under my `/Users` directory though.
 - The results of the contents API can be viewed at http://127.0.0.1:8000/contents/
 ## API Documentation
