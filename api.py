@@ -11,15 +11,19 @@ ROOT = ""
 @app.route('/contents/', defaults={'input_path': '/'}, methods=['GET'])
 @app.route('/contents/<path:input_path>', methods=['GET'])
 def get_contents(input_path):
-    path = Path(ROOT + input_path)
+    try:
+        path = Path(ROOT + input_path)
+    except:
+        return {'message': 'Invalid input path.'}, 400
+
     if not path.exists():
-        return jsonify({'message': f'Path {str(path)} does not exist.'})
+        return jsonify({'message': f'Path {str(path)} does not exist.'}), 404
     elif path.is_dir():
         return _get_dir_contents(path)
     elif path.is_file():
         return _get_file_contents(path)
 
-    return jsonify({'message': 'There was an unknown error.'})
+    return jsonify({'message': 'The path was of an unknown type.'}), 500
 
 
 def _get_dir_contents(dir_path):
@@ -32,7 +36,7 @@ def _get_dir_contents(dir_path):
             'permissions': _format_file_permissions(child.stat().st_mode),
         }
         results[name] = details
-    return jsonify({"contents": results})
+    return jsonify({"contents": results}), 200
 
 
 def _format_file_permissions(mode_as_int):
@@ -40,7 +44,7 @@ def _format_file_permissions(mode_as_int):
 
 
 def _get_file_contents(file_path):
-    return jsonify({'contents': file_path.read_text()})
+    return jsonify({'contents': file_path.read_text()}), 200
 
 
 if __name__ == '__main__':
