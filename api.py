@@ -5,15 +5,14 @@ from pathlib import Path
 app = Flask(__name__)
 cors = CORS(app)
 
-ROOT = "/"
+ROOT = ""
 
 
-@app.route('/contents', methods=['GET'])
-def get_contents():
-    input_path = ""
+@app.route('/contents/', defaults={'input_path': '/'}, methods=['GET'])
+@app.route('/contents/<path:input_path>', methods=['GET'])
+def get_contents(input_path):
     path = Path(ROOT + input_path)
     if not path.exists():
-        print(path)
         return jsonify({'message': f'Path {str(path)} does not exist.'})
     elif path.is_dir():
         return _get_dir_contents(path)
@@ -26,7 +25,7 @@ def get_contents():
 def _get_dir_contents(dir_path):
     results = {}
     for child in dir_path.iterdir():
-        name = child.name + ("/" if child.is_dir else "")
+        name = child.name + ("/" if child.is_dir() else "")
         details = {
             'owner': child.owner(),
             'size': child.stat().st_size,
