@@ -8,7 +8,7 @@
 ### 1. GET /contents/{path}
 Returns either the contents of the file or directory at the given path, relative to the root path supplied to `run.sh` during setup. For files, the contents is the entire text of the file. For directories, it is a list of the immediate children of the directory with details about each child.
 #### Example for file:
-`GET /contents/app/requirements.txt`
+`GET /contents/file-system-browser/requirements.txt`
 
 ```
 {
@@ -16,25 +16,34 @@ Returns either the contents of the file or directory at the given path, relative
 }
 ```
 #### Example for directory:
-`GET /contents/app`
+`GET /contents/file-system-browser`
 
 ```
 {
-  "contents": {
-    ".git/": {
+  "contents": [
+    {
+      "name": ".git/", 
       "owner": "root", 
       "permissions": "755", 
-      "size": 416
+      "size": 480
     }, 
-    ".gitignore": {
+    {
+      "name": ".gitignore", 
       "owner": "root", 
       "permissions": "644", 
       "size": 336
     }, 
-    ".pytest_cache/": {
+    {
+      "name": ".pytest_cache/", 
       "owner": "root", 
       "permissions": "755", 
       "size": 192
+    }, 
+    {
+      "name": "Dockerfile", 
+      "owner": "root", 
+      "permissions": "644", 
+      "size": 120
     },
     ...
 }

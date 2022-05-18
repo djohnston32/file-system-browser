@@ -27,15 +27,15 @@ def get_contents(input_path):
 
 
 def _get_dir_contents(dir_path):
-    results = {}
+    results = []
     for child in dir_path.iterdir():
-        name = child.name + ("/" if child.is_dir() else "")
         details = {
+            'name':  child.name + ("/" if child.is_dir() else ""),
             'owner': child.owner(),
             'size': child.stat().st_size,
             'permissions': _format_file_permissions(child.stat().st_mode),
         }
-        results[name] = details
+        results.append(details)
     return jsonify({"contents": results}), 200
 
 
