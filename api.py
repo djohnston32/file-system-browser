@@ -5,7 +5,7 @@ from pathlib import Path
 app = Flask(__name__)
 cors = CORS(app)
 
-ROOT = ""
+ROOT = "host_browsing_root/"
 
 
 @app.route('/contents/', defaults={'input_path': '/'}, methods=['GET'])

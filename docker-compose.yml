@@ -8,6 +8,7 @@ services:
     command: python api.py
     volumes:
       - .:/app
+      - ${BROWSING_ROOT}:/host_browsing_root
     ports:
       - "8000:8000"
 
